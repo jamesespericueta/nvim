@@ -156,7 +156,7 @@ require('lazy').setup({
     },
   },
   {
-    'Shatur/neovim-ayu'
+    'rebelot/kanagawa.nvim'
   },
   {
     -- Set lualine as statusline
@@ -164,7 +164,7 @@ require('lazy').setup({
     -- See `:help lualine.txt`
     opts = {
       options = {
-        theme = 'ayu',
+        theme = 'kanagawa',
         icons_enabled = false,
         component_separators = '|',
         section_separators = '',
@@ -242,10 +242,10 @@ require("nvim-tree").setup()
 
 vim.o.background= "dark"
 
-require('ayu').setup({
+require('kanagawa').setup({
   mirage=false,
 })
-vim.cmd[[colorscheme ayu]]
+vim.cmd[[colorscheme kanagawa]]
 vim.cmd('hi Normal ctermbg=NONE guibg=NONE')
 vim.cmd('hi NonText ctermbg=NONE guibg=NONE')
 vim.cmd('hi LineNr guibg=none guifg=#BFBDB6')
@@ -551,7 +551,7 @@ require('mason-lspconfig').setup()
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  -- pyright = {},
+  pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
