@@ -33,7 +33,6 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
   -- Nvim tree
-  'nvim-tree/nvim-tree.lua',
   'nvim-tree/nvim-web-devicons',
 
   -- Git related plugins
@@ -43,6 +42,12 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
+  {'nvim-tree/nvim-tree.lua', opts = {
+      filters = {
+        dotfiles = false,
+      },
+    }
+  },
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -293,6 +298,9 @@ vim.o.termguicolors = true
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
+
+vim.keymap.set('n', '<C-b>', function() vim.cmd [[NvimTreeToggle]] end)
+
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
@@ -374,8 +382,7 @@ vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { d
 vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
-    previewer = false,
+    previewer = true,
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
@@ -551,7 +558,7 @@ require('mason-lspconfig').setup()
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  pyright = {},
+  -- pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
