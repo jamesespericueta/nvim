@@ -41,11 +41,34 @@ require('lazy').setup({
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
-  {'windwp/nvim-ts-autotag', per_filetype = {
-      ["html"] = {
-        enable_close = false
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    opts = {
+      settings={
+        tsserver_plugins = {
+          -- for TypeScript v4.9+
+          "@styled/typescript-styled-plugin",
+          -- or for older TypeScript versions
+          -- "typescript-styled-plugin",
+        },
       }
+    },
+  },
+  {'windwp/nvim-ts-autotag', opts = {
+    enable_close = true, -- Auto close tags
+    enable_rename = true, -- Auto rename pairs of tags
+    enable_close_on_slash = false -- Auto close on trailing </
+  },
+    per_filetype = {
+    ["html"] = {
+      enable_close = false
+    },
+    ["tsx"] = {
+      enable_close = true
     }
+      
+  }
   },
 
   {'nvim-tree/nvim-tree.lua', opts = {
@@ -428,7 +451,7 @@ vim.defer_fn(function()
     -- You can specify additional Treesitter modules here: -- For example: -- playground = {--enable = true,-- },
     modules = {},
     highlight = { enable = true },
-    indent = { enable = true },
+    indent = { enable = false },
     incremental_selection = {
       enable = true,
       keymaps = {
@@ -577,8 +600,9 @@ local servers = {
   -- gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
-  -- tsserver = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
+  ts_ls = {},
+  html = { filetypes = { 'html', 'twig', 'hbs'} },
+  cssls = { filetypes = {'css'} },
 
   lua_ls = {
     Lua = {
@@ -666,6 +690,13 @@ cmp.setup {
     { name = 'path' },
   },
 }
+-- Set tabstop, shiftwidth, and expandtab
+vim.o.tabstop = 2        -- Number of spaces tabs count for
+vim.o.shiftwidth = 2     -- Number of spaces to use for each step of indent
+vim.o.expandtab = true   -- Use spaces instead of tabs
+vim.o.smartindent = true -- Auto-indent new lines
+vim.o.autoindent = true  -- Copy indent from the current line
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
