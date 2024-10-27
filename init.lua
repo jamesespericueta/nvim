@@ -38,9 +38,25 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
-
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && yarn install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
+    ft = { "markdown" },
+  },
+  {
+    dir = "~/.config/nvim/lua/nvim-proman/",  -- Path to your plugin directory
+    name = "nvim-proman",  -- Name of your plugin
+    dependencies = { "nvim-tree/nvim-tree.lua" },  -- Make sure nvim-tree is installed
+    config = function()
+        require("nvim-proman").init()  -- Call the function during plugin setup
+    end
+  },
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
@@ -55,11 +71,13 @@ require('lazy').setup({
       }
     },
   },
-  {'windwp/nvim-ts-autotag', opts = {
-    enable_close = true, -- Auto close tags
-    enable_rename = true, -- Auto rename pairs of tags
-    enable_close_on_slash = false -- Auto close on trailing </
+  {
+    'rebelot/kanagawa.nvim',
   },
+  {
+    "catppuccin/nvim", name = "catppuccin",
+  },
+  {'windwp/nvim-ts-autotag',
     per_filetype = {
     ["html"] = {
       enable_close = false
@@ -67,7 +85,6 @@ require('lazy').setup({
     ["tsx"] = {
       enable_close = true
     }
-      
   }
   },
 
@@ -188,9 +205,6 @@ require('lazy').setup({
         map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select git hunk' })
       end,
     },
-  },
-  {
-    'rebelot/kanagawa.nvim'
   },
   {
     -- Set lualine as statusline
@@ -596,10 +610,10 @@ require('mason-lspconfig').setup()
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 local servers = {
-  -- clangd = {},
   -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
+  clangd = {},
+  pyright = {},
+  rust_analyzer = {},
   ts_ls = {},
   html = { filetypes = { 'html', 'twig', 'hbs'} },
   cssls = { filetypes = {'css'} },
