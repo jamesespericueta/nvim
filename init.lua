@@ -52,7 +52,7 @@ require('lazy').setup({
   {
     dir = "~/.config/nvim/lua/nvim-proman/",  -- Path to your plugin directory
     name = "nvim-proman",  -- Name of your plugin
-    dependencies = { "nvim-tree/nvim-tree.lua" },  -- Make sure nvim-tree is installed
+    dependencies = { "nvim-tree/nvim-tree.lua", "nvim-lua/plenary.nvim" },  -- Make sure nvim-tree is installed
     config = function()
         require("nvim-proman").init()  -- Call the function during plugin setup
     end
@@ -78,9 +78,14 @@ require('lazy').setup({
     "catppuccin/nvim", name = "catppuccin",
   },
   {'windwp/nvim-ts-autotag',
+  opts = {
+    enable_close = true,
+    enable_rename = true,
+    enable_close_on_slash = false
+  },
     per_filetype = {
     ["html"] = {
-      enable_close = false
+      enable_close = true
     },
     ["tsx"] = {
       enable_close = true
@@ -617,7 +622,7 @@ local servers = {
   ts_ls = {},
   html = { filetypes = { 'html', 'twig', 'hbs'} },
   cssls = { filetypes = {'css'} },
-
+  gopls = {filetypes = {'go'}},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
