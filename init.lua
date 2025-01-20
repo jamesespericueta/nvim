@@ -38,8 +38,43 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+  {
+    "f-person/auto-dark-mode.nvim",
+    opts = {
+      update_interval = 1000,
+      set_dark_mode = function()
+        vim.api.nvim_set_option_value("background", "dark", {})
+        vim.cmd("colorscheme eidolon")
+      end,
+      set_light_mode = function()
+        vim.api.nvim_set_option_value("background", "light", {})
+        vim.cmd("colorscheme tokyonight-day")
+      end,
+    },
+  },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  },
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
+  --{
+  --  'vyfor/cord.nvim',
+  --  branch = 'client-server',
+  --  build = ':Cord fetch',
+  --  opts = {}, -- calls require('cord').setup()
+  --},
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -75,9 +110,6 @@ require('lazy').setup({
       "jamesespericueta/eidolon.nvim",
       lazy = false,
       priority = 1000,
-      config = function()
-          vim.cmd [[colorscheme eidolon]]
-      end
   },
   {
     "catppuccin/nvim", name = "catppuccin",
@@ -222,7 +254,7 @@ require('lazy').setup({
     -- See `:help lualine.txt`
     opts = {
       options = {
-        theme = 'eidolon',
+        theme = 'tokyonight-day',
         icons_enabled = false,
         component_separators = '|',
         section_separators = '',
@@ -322,7 +354,8 @@ hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
 end)
 
 require("ibl").setup { indent = { highlight = highlight } }
-
+--colors and background colors
+vim.cmd[[colorscheme tokyonight]]
 vim.cmd('hi Normal ctermbg=NONE guibg=NONE')
 vim.cmd('hi NonText ctermbg=NONE guibg=NONE guifg=NONE')
 vim.cmd('hi LineNr guibg=NONE guifg=NONE')
