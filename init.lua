@@ -71,9 +71,8 @@ require('lazy').setup({
   'tpope/vim-sleuth',
   --{
   --  'vyfor/cord.nvim',
-  --  branch = 'client-server',
-  --  build = ':Cord fetch',
-  --  opts = {}, -- calls require('cord').setup()
+  --  build = ':Cord update',
+  --  -- opts = {}
   --},
   {
     "iamcco/markdown-preview.nvim",
